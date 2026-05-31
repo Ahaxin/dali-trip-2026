@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大理亲子游 · 7月4-11日 · 三代同堂</title>
+<style>
+  :root {
+    --bg: #f8f5f0;
+    --card: #fff;
+    --text: #2c2416;
+    --muted: #6b5e4a;
+    --accent: #c17f3e;
+    --accent2: #5a7a6f;
+    --border: #e8dfd3;
+    --tag-bg: #f0e8da;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+  .hero {
+    background: linear-gradient(135deg, #3a5a40 0%, #588157 40%, #a3b18a 100%);
+    color: #fff;
+    padding: 60px 20px 40px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.2em; margin-bottom: 10px; letter-spacing: 2px; }
+  .hero .sub { font-size: 1.1em; opacity: 0.9; }
+  .hero .dates { font-size: 1.5em; margin-top: 15px; font-weight: 300; }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  /* Info bar */
+  .info-bar {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    background: var(--card); border-radius: 12px;
+    padding: 20px 24px; margin: -30px 20px 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    justify-content: center;
+  }
+  .info-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.95em; color: var(--muted);
+  }
+  .info-item .emoji { font-size: 1.3em; }
+  .info-item strong { color: var(--text); }
+
+  /* Day card */
+  .day {
+    background: var(--card);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+  }
+  .day-header {
+    padding: 18px 24px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .day-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2em; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .day-header h2 { font-size: 1.25em; flex: 1; }
+  .day-header .intensity { font-size: 0.85em; color: var(--muted); }
+  .day-body { padding: 20px 24px; display: none; }
+  .day.open .day-body { display: block; }
+  .day.open .day-header { border-bottom-color: var(--accent); }
+
+  .timeline { list-style: none; }
+  .timeline li {
+    display: flex; gap: 14px; padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .timeline li:last-child { border-bottom: none; }
+  .timeline .time {
+    font-weight: 700; color: var(--accent);
+    min-width: 70px; font-size: 0.9em;
+  }
+  .timeline .desc { flex: 1; }
+
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .tag {
+    background: var(--tag-bg); color: var(--muted);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 0.82em;
+  }
+
+  /* Sections */
+  .section {
+    background: var(--card);
+    border-radius: 12px; padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+  }
+  .section h2 {
+    font-size: 1.3em; margin-bottom: 16px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--accent);
+  }
+  .section h3 { font-size: 1.05em; margin: 16px 0 8px; color: var(--accent2); }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th, td {
+    text-align: left; padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.93em;
+  }
+  th { background: var(--tag-bg); font-weight: 600; color: var(--muted); }
+
+  .restaurant-card {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .restaurant-card h4 { color: var(--accent); margin-bottom: 4px; }
+  .restaurant-card .meta { font-size: 0.88em; color: var(--muted); }
+
+  .highlight {
+    background: #fff8e7; border-left: 4px solid var(--accent);
+    padding: 14px 18px; border-radius: 0 8px 8px 0;
+    margin: 12px 0; font-size: 0.93em;
+  }
+
+  /* Comments */
+  .comments-section {
+    background: var(--card); border-radius: 12px;
+    padding: 24px; margin-top: 24px;
+    border: 1px solid var(--border);
+  }
+
+  /* Language toggle */
+  .lang-toggle {
+    position: fixed; top: 16px; right: 16px;
+    display: flex; gap: 4px; z-index: 100;
+  }
+  .lang-toggle button {
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+    color: #fff; padding: 6px 14px; border-radius: 20px;
+    cursor: pointer; font-size: 0.85em; backdrop-filter: blur(8px);
+  }
+  .lang-toggle button.active { background: #fff; color: #3a5a40; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.5em; }
+    .hero .dates { font-size: 1.1em; }
+    .info-bar { margin: -20px 12px 20px; padding: 14px; }
+    .day-header { padding: 14px 16px; }
+    .day-body { padding: 14px 16px; }
+    .timeline li { flex-direction: column; gap: 2px; }
+  }
+
+  /* Print */
+  @media print {
+    .lang-toggle, .comments-section, .giscus { display: none; }
+    .day-body { display: block !important; }
+    body { font-size: 12px; }
+  }
+
+  .lang-en { display: none; }
+  html[lang="en"] .lang-zh { display: none; }
+  html[lang="en"] .lang-en { display: block; }
+
+  .footer {
+    text-align: center; padding: 40px 20px;
+    color: var(--muted); font-size: 0.88em;
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button onclick="setLang('zh')" class="active" id="btn-zh">中文</button>
+  <button onclick="setLang('en')" id="btn-en">EN</button>
+</div>
+
+<div class="hero">
+  <h1 class="lang-zh">🌿 大理亲子游</h1>
+  <h1 class="lang-en">🌿 Dali Family Trip</h1>
+  <div class="dates">2026.7.4 — 7.11</div>
+  <div class="sub lang-zh">三代同堂 · 两个家庭 · 清真美食 · 苍山洱海</div>
+  <div class="sub lang-en">3 Generations · 2 Families · Halal · Cangshan & Erhai</div>
+</div>
+
+<div class="info-bar">
+  <div class="info-item"><span class="emoji">👨‍👩‍👧‍👧</span> <span class="lang-zh"><strong>10人</strong> (Chang家6 + 友家4)</span><span class="lang-en"><strong>10 ppl</strong> (Chang 6 + Friends 4)</span></div>
+  <div class="info-item"><span class="emoji">📍</span> <span class="lang-zh"><strong>住宿</strong> 大理古城苍洱大道</span><span class="lang-en"><strong>Stay</strong> Cang'er Ave, Dali Old Town</span></div>
+  <div class="info-item"><span class="emoji">🍽️</span> <span class="lang-zh"><strong>全程清真</strong></span><span class="lang-en"><strong>Halal only</strong></span></div>
+  <div class="info-item"><span class="emoji">🌡️</span> <span class="lang-zh"><strong>15-25°C</strong> 阵雨</span><span class="lang-en"><strong>15-25°C</strong> Showers</span></div>
+</div>
+
+<div class="container">
+
+<!-- ==================== DAY 1 ==================== -->
+<div class="day open" id="day1">
+  <div class="day-header" onclick="toggleDay('day1')">
+    <div class="day-num" style="background:#c17f3e">1</div>
+    <h2 class="lang-zh">7/4 周六 · 抵达 + 两家大聚餐</h2>
+    <h2 class="lang-en">Sat 7/4 · Arrival + Feast</h2>
+    <span class="intensity">⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">16:00</span><span class="desc lang-zh">抵达大理，入住苍洱大道附近</span><span class="desc lang-en">Arrive Dali, check in near Cang'er Avenue</span></li>
+      <li><span class="time">16:30-18:30</span><span class="desc lang-zh">安顿休息，适应海拔 (~2000m)</span><span class="desc lang-en">Rest, acclimate to altitude (~2000m)</span></li>
+      <li><span class="time">19:00</span><span class="desc lang-zh"><strong>两家10人大聚餐</strong> — 高档清真宴（见下方推荐）</span><span class="desc lang-en"><strong>10-person feast</strong> — upscale halal dinner (see below)</span></li>
+    </ul>
+    <div class="tags"><span class="tag">🍽️ 聚餐</span><span class="tag">🏨 入住</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 2 ==================== -->
+<div class="day" id="day2">
+  <div class="day-header" onclick="toggleDay('day2')">
+    <div class="day-num" style="background:#5a7a6f">2</div>
+    <h2 class="lang-zh">7/5 周日 · 苍山缆车</h2>
+    <h2 class="lang-en">Sun 7/5 · Cangshan Cable Car</h2>
+    <span class="intensity">⭐⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">9:00</span><span class="desc lang-zh">出发去<strong>感通索道</strong></span><span class="desc lang-en">Head to <strong>Gantong Cableway</strong></span></li>
+      <li><span class="time">9:30-12:00</span><span class="desc lang-zh">缆车上山(2600m) → 走<strong>玉带路</strong>平缓栈道(像公园散步)</span><span class="desc lang-en">Cable car up (2600m) → <strong>Jade Belt Path</strong> (flat, easy walk)</span></li>
+      <li><span class="time">12:30</span><span class="desc lang-zh">下山午餐（清真）</span><span class="desc lang-en">Descend, halal lunch</span></li>
+      <li><span class="time">下午</span><span class="desc lang-zh">休整，老人午休</span><span class="desc lang-en">Rest, nap for elderly</span></li>
+      <li><span class="time">晚上</span><span class="desc lang-zh">古城溜达（步行即到）</span><span class="desc lang-en">Stroll ancient town (walking distance)</span></li>
+    </ul>
+    <div class="highlight lang-zh">
+      <strong>为什么选感通索道？</strong><br>
+      ✅ 封闭式缆车，安全感强<br>
+      ✅ 到达2600m（非高海拔），老人友好<br>
+      ✅ 玉带路=山腰平路，不爬山，风景绝美<br>
+      ❌ 不选洗马潭索道（3920m，老人易高反）
+    </div>
+    <div class="highlight lang-en">
+      <strong>Why Gantong Cableway?</strong><br>
+      ✅ Enclosed cable car<br>
+      ✅ 2600m only — elderly-friendly<br>
+      ✅ Jade Belt Path = flat mountain trail, no climbing<br>
+      ❌ NOT Ximatan (3920m — altitude risk for elderly)
+    </div>
+    <div class="tags"><span class="tag">🚡 缆车</span><span class="tag">🏔️ 苍山</span><span class="tag">👴 老人友好</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 3 ==================== -->
+<div class="day" id="day3">
+  <div class="day-header" onclick="toggleDay('day3')">
+    <div class="day-num" style="background:#8b6f47">3</div>
+    <h2 class="lang-zh">7/6 周一 · 骑马 + 花海</h2>
+    <h2 class="lang-en">Mon 7/6 · Horse Riding + Flowers</h2>
+    <span class="intensity">⭐⭐½</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">9:00</span><span class="desc lang-zh">出发去<strong>苍山茶马古道马场</strong></span><span class="desc lang-en">Head to <strong>Cangshan Tea-Horse Road stables</strong></span></li>
+      <li><span class="time">9:30-11:30</span><span class="desc lang-zh">骑马体验（约1小时，孩子可骑小马/同骑）<br><em>老人可选：不骑，在旁边喝茶看山</em></span><span class="desc lang-en">Horse riding (~1hr, kids on ponies or tandem)<br><em>Elderly optional: tea with mountain view</em></span></li>
+      <li><span class="time">12:00</span><span class="desc lang-zh">清真午餐</span><span class="desc lang-en">Halal lunch</span></li>
+      <li><span class="time">14:00-16:30</span><span class="desc lang-zh"><strong>洱海边花海</strong>拍照（薰衣草/向日葵/格桑花）+ 湖边散步</span><span class="desc lang-en"><strong>Flower fields</strong> by Erhai (lavender/sunflowers) + lakeside walk</span></li>
+    </ul>
+    <div class="tags"><span class="tag">🐴 骑马</span><span class="tag">🌸 花海</span><span class="tag">🌊 洱海</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 4 ==================== -->
+<div class="day" id="day4">
+  <div class="day-header" onclick="toggleDay('day4')">
+    <div class="day-num" style="background:#4a7c59">4</div>
+    <h2 class="lang-zh">7/7 周二 · 采蘑菇 + 喜洲扎染</h2>
+    <h2 class="lang-en">Tue 7/7 · Mushrooms + Xizhou Tie-Dye</h2>
+    <span class="intensity">⭐⭐½</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">7:00</span><span class="desc lang-zh">出发去苍山脚下（感通寺/无为寺方向）</span><span class="desc lang-en">Depart for Cangshan foothills</span></li>
+      <li><span class="time">7:30-10:00</span><span class="desc lang-zh"><strong>🍄 采蘑菇！</strong>跟当地向导进山林<br>7月菌子季：鸡枞、牛肝菌、青头菌<br><em>老人量力，可在山脚等</em></span><span class="desc lang-en"><strong>🍄 Mushroom foraging!</strong> With local guide<br>July = peak mushroom season<br><em>Elderly can wait at base</em></span></li>
+      <li><span class="time">10:30</span><span class="desc lang-zh">驱车去喜洲（30分钟）</span><span class="desc lang-en">Drive to Xizhou (30 min)</span></li>
+      <li><span class="time">11:30-13:00</span><span class="desc lang-zh">喜洲清真午餐 + 古镇漫步（转角楼、严家大院）</span><span class="desc lang-en">Halal lunch + Xizhou old town stroll</span></li>
+      <li><span class="time">14:00-16:00</span><span class="desc lang-zh"><strong>周城扎染体验</strong> — 全家动手做白族扎染</span><span class="desc lang-en"><strong>Zhoucheng tie-dye</strong> — Bai ethnic craft workshop</span></li>
+    </ul>
+    <div class="tags"><span class="tag">🍄 采蘑菇</span><span class="tag">🏘️ 喜洲</span><span class="tag">🎨 扎染</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 5 ==================== -->
+<div class="day" id="day5">
+  <div class="day-header" onclick="toggleDay('day5')">
+    <div class="day-num" style="background:#6b8c5c">5</div>
+    <h2 class="lang-zh">7/8 周三 · 莫催茶室</h2>
+    <h2 class="lang-en">Wed 7/8 · Mo Cui Tea House</h2>
+    <span class="intensity">⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">10:00</span><span class="desc lang-zh">出发去莫催茶室（喜洲方向苍山脚下）</span><span class="desc lang-en">Depart for Mo Cui Tea House (Xizhou/Cangshan area)</span></li>
+      <li><span class="time">10:30-16:00</span><span class="desc lang-zh">大人喝茶看苍山洱海，孩子<strong>溪边玩水</strong></span><span class="desc lang-en">Adults: tea with views. Kids: <strong>creek play!</strong></span></li>
+    </ul>
+    <div class="highlight lang-zh">
+      <strong>装备提醒：</strong>孩子凉鞋+备用衣裤+水枪/小网兜<br>
+      <strong>午餐：</strong>提前让包车司机帮忙买清真外卖带上山<br>
+      <strong>天气：</strong>出发前查天气，下雨溪水涨+冷，备选：大理州博物馆
+    </div>
+    <div class="highlight lang-en">
+      <strong>Gear:</strong> water shoes, spare clothes, water toys for kids<br>
+      <strong>Lunch:</strong> ask driver to pack halal takeaway<br>
+      <strong>Weather:</strong> check forecast — rainy day backup: Dali Museum
+    </div>
+    <div class="tags"><span class="tag">🍵 喝茶</span><span class="tag">💧 溪水</span><span class="tag">😌 最轻松</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 6 ==================== -->
+<div class="day" id="day6">
+  <div class="day-header" onclick="toggleDay('day6')">
+    <div class="day-num" style="background:#5b8fa8">6</div>
+    <h2 class="lang-zh">7/9 周四 · 洱海骑行日</h2>
+    <h2 class="lang-en">Thu 7/9 · Erhai Cycling</h2>
+    <span class="intensity">⭐⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">9:30</span><span class="desc lang-zh">才村/龙龛码头租车</span><span class="desc lang-en">Rent bikes at Caicun/Longkan</span></li>
+      <li><span class="time">10:00-12:00</span><span class="desc lang-zh"><strong>洱海生态廊道骑行</strong>（无机动车，安全）<br>大人：电瓶车 | 孩子：小自行车 | 老人：双人车或观光车</span><span class="desc lang-en"><strong>Erhai eco-corridor cycling</strong> (car-free, safe)<br>Adults: e-bikes | Kids: bicycles | Elderly: tandem or shuttle</span></li>
+      <li><span class="time">12:00</span><span class="desc lang-zh">洱海边清真午餐</span><span class="desc lang-en">Halal lunch by the lake</span></li>
+      <li><span class="time">14:00-16:00</span><span class="desc lang-zh">继续骑或湖边咖啡馆发呆</span><span class="desc lang-en">More cycling or lakeside café</span></li>
+    </ul>
+    <div class="highlight lang-zh">
+      才村→龙龛段最精华，单程约4公里，平坦无坡。不想骑全程的在湖边找咖啡馆坐着看海。
+    </div>
+    <div class="highlight lang-en">
+      Caicun→Longkan is the best section, ~4km, flat. Those not cycling can chill at a lakeside café.
+    </div>
+    <div class="tags"><span class="tag">🚲 骑行</span><span class="tag">🌊 洱海</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 7 ==================== -->
+<div class="day" id="day7">
+  <div class="day-header" onclick="toggleDay('day7')">
+    <div class="day-num" style="background:#8b5a4a">7</div>
+    <h2 class="lang-zh">7/10 周五 · 巍山古城</h2>
+    <h2 class="lang-en">Fri 7/10 · Weishan Ancient Town</h2>
+    <span class="intensity">⭐⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">9:00</span><span class="desc lang-zh">出发（1小时车程）</span><span class="desc lang-en">Depart (1hr drive)</span></li>
+      <li><span class="time">10:00-12:00</span><span class="desc lang-zh">巍山古城漫步（原生态、游客少）</span><span class="desc lang-en">Weishan old town (authentic, few tourists)</span></li>
+      <li><span class="time">12:00-13:30</span><span class="desc lang-zh"><strong>巍山清真美食盛宴</strong> — 扒肉饵丝、一根面、蜜饯</span><span class="desc lang-en"><strong>Halal food feast</strong> — Weishan is a Hui (Muslim) stronghold</span></li>
+      <li><span class="time">14:00-16:00</span><span class="desc lang-zh">南诏博物馆 + 巍宝山山脚散步</span><span class="desc lang-en">Nanzhao Museum + Weibaoshan base walk</span></li>
+      <li><span class="time">晚上</span><span class="desc lang-zh">告别晚餐</span><span class="desc lang-en">Farewell dinner</span></li>
+    </ul>
+    <div class="tags"><span class="tag">🏛️ 古城</span><span class="tag">🍜 清真美食天堂</span><span class="tag">📜 南诏文化</span></div>
+  </div>
+</div>
+
+<!-- ==================== DAY 8 ==================== -->
+<div class="day" id="day8">
+  <div class="day-header" onclick="toggleDay('day8')">
+    <div class="day-num" style="background:#9b9b9b">8</div>
+    <h2 class="lang-zh">7/11 周六 · 返程</h2>
+    <h2 class="lang-en">Sat 7/11 · Departure</h2>
+    <span class="intensity">⭐</span>
+  </div>
+  <div class="day-body">
+    <ul class="timeline">
+      <li><span class="time">上午</span><span class="desc lang-zh">收拾行李退房。伴手礼：扎染（Day4已做）+ 乳扇 + 普洱茶</span><span class="desc lang-en">Pack up, checkout. Souvenirs: tie-dye (made on Day4) + rushan cheese + pu'er tea</span></li>
+    </ul>
+    <div class="tags"><span class="tag">✈️ 返程</span></div>
+  </div>
+</div>
+
+<!-- ==================== CONTACTS ==================== -->
+<div class="section">
+  <h2 class="lang-zh">📞 联系方式清单</h2>
+  <h2 class="lang-en">📞 Contact Directory</h2>
+
+  <h3 class="lang-zh">🏨 住宿</h3>
+  <h3 class="lang-en">🏨 Accommodation</h3>
+  <div class="restaurant-card">
+    <h4 class="lang-zh">苍洱大道附近（大理古城外）</h4>
+    <h4 class="lang-en">Near Cang'er Avenue (outside Dali Old Town)</h4>
+    <p class="meta lang-zh">📍 具体地址请补充 | 步行到古城几分钟 | 近感通索道方向</p>
+    <p class="meta lang-en">📍 Exact address TBD | Few minutes walk to old town | Near Gantong cableway direction</p>
+  </div>
+
+  <h3 class="lang-zh">🍽️ Day1 聚餐 — 高档清真餐厅</h3>
+  <h3 class="lang-en">🍽️ Day1 Feast — Upscale Halal Restaurants</h3>
+  <p class="lang-zh" style="color:var(--muted);font-size:0.9em;margin-bottom:12px">
+    ⚠️ 以下电话可能变动，请在大众点评/美团搜索店名获取最新号码，或让酒店前台帮忙预约。
+  </p>
+  <p class="lang-en" style="color:var(--muted);font-size:0.9em;margin-bottom:12px">
+    ⚠️ Phone numbers may change. Search restaurant name on Dianping/Meituan for current info, or ask hotel concierge.
+  </p>
+
+  <div class="restaurant-card">
+    <h4>1. 古城花园清真餐厅 <span class="tag" style="margin-left:8px">⭐ 首选</span></h4>
+    <p class="meta lang-zh">📍 大理古城普贤寺正对面 | 🏷️ 院落式二层花园，二楼看苍山，环境雅致 | 🎯 有包间，适合10人聚餐</p>
+    <p class="meta lang-en">📍 Opposite Puxian Temple, Dali Old Town | 🏷️ Garden courtyard, 2F Cangshan view | 🎯 Private rooms available</p>
+    <p class="meta lang-zh">📱 大众点评搜：<strong>"古城花园清真餐厅"</strong> 获取电话</p>
+    <p class="meta lang-en">📱 Search on Dianping: <strong>"古城花园清真餐厅"</strong> for phone</p>
+  </div>
+
+  <div class="restaurant-card">
+    <h4>2. 伊香园清真餐厅</h4>
+    <p class="meta lang-zh">📍 大理古城南门博爱路附近 | 🏷️ 大理最老牌清真大店，铜锅牛肉、牛干巴 | 🎯 有包间</p>
+    <p class="meta lang-en">📍 Near South Gate, Bo'ai Road | 🏷️ Oldest halal restaurant, copper pot beef | 🎯 Private rooms available</p>
+    <p class="meta lang-zh">📱 大众点评搜：<strong>"伊香园清真餐厅 大理"</strong> 获取电话</p>
+    <p class="meta lang-en">📱 Search on Dianping: <strong>"伊香园清真餐厅 大理"</strong> for phone</p>
+  </div>
+
+  <div class="restaurant-card">
+    <h4>3. 追味食典清真餐厅</h4>
+    <p class="meta lang-zh">📍 大理古城内 | 🏷️ 新派清真，野生菌汤锅 + 石板烧 | 🎯 需确认包间</p>
+    <p class="meta lang-en">📍 Dali Old Town | 🏷️ Modern halal: wild mushroom hotpot + stone grill | 🎯 Confirm private room</p>
+    <p class="meta lang-zh">📱 大众点评搜：<strong>"追味食典"</strong> 获取电话</p>
+    <p class="meta lang-en">📱 Search on Dianping: <strong>"追味食典"</strong> for phone</p>
+  </div>
+
+  <div class="restaurant-card">
+    <h4>4. 清真院子里柴火鸡（古城店）</h4>
+    <p class="meta lang-zh">📍 五里桥清真美食一条街 | 🏷️ 庭院式柴火鸡，氛围好 | ⚠️ 偏农家风</p>
+    <p class="meta lang-en">📍 Wuliqiao Halal Food Street | 🏷️ Courtyard firewood chicken | ⚠️ Rustic style</p>
+  </div>
+
+  <div class="restaurant-card" style="border-color:var(--accent);background:#fffaf5">
+    <h4>5. 🏆 最高档方案：洱海边高端酒店定制清真宴</h4>
+    <p class="meta lang-zh">🏨 洱海天域酒店 / 大理希尔顿 / 大理英迪格 等<br>📞 联系酒店餐饮部，提前5天说明 "10人清真宴"<br>✅ 环境好、有包间、服务到位、档次远高于街边馆子</p>
+    <p class="meta lang-en">🏨 Erhai Tianyu / Hilton Dali / Indigo Dali etc.<br>📞 Contact hotel F&B dept, 5 days ahead: "10-person halal banquet"<br>✅ Best ambiance, private rooms, premium service</p>
+  </div>
+
+  <h3 class="lang-zh">🎯 活动联系方式</h3>
+  <h3 class="lang-en">🎯 Activity Contacts</h3>
+
+  <table>
+    <tr><th class="lang-zh">项目</th><th class="lang-en">Item</th><th class="lang-zh">搜索关键词（大众点评/美团/小红书）</th><th class="lang-en">Search Keywords (Dianping/RED)</th></tr>
+    <tr>
+      <td class="lang-zh">苍山感通索道</td><td class="lang-en">Gantong Cableway</td>
+      <td>"大理感通索道" 或 "苍山景区"</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">骑马（茶马古道）</td><td class="lang-en">Horse Riding</td>
+      <td>"大理苍山骑马" "大理茶马古道骑马"</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">🍄 采蘑菇向导</td><td class="lang-en">Mushroom Guide</td>
+      <td>"大理采蘑菇向导" "大理捡菌子体验"（小红书最佳）</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">莫催茶室</td><td class="lang-en">Mo Cui Tea House</td>
+      <td>"大理莫催茶室"</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">周城扎染体验</td><td class="lang-en">Zhoucheng Tie-Dye</td>
+      <td>"周城扎染体验" "大理扎染"</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">洱海骑行租车</td><td class="lang-en">Bike Rental</td>
+      <td>"大理洱海骑行租车" "才村租车"</td>
+    </tr>
+    <tr>
+      <td class="lang-zh">包车（清真）</td><td class="lang-en">Driver (Halal-aware)</td>
+      <td>"大理包车 清真" 或 问酒店前台推荐</td>
+    </tr>
+  </table>
+
+  <h3 class="lang-zh">🏥 紧急联系</h3>
+  <h3 class="lang-en">🏥 Emergency</h3>
+  <table>
+    <tr><td class="lang-zh">大理市人民医院</td><td class="lang-en">Dali People's Hospital</td><td>0872-2127066</td></tr>
+    <tr><td class="lang-zh">大理古城景区救援</td><td class="lang-en">Old Town Rescue</td><td>0872-2670004</td></tr>
+    <tr><td class="lang-zh">苍山景区救援</td><td class="lang-en">Cangshan Rescue</td><td>0872-2670004</td></tr>
+    <tr><td class="lang-zh">旅游投诉</td><td class="lang-en">Tourism Hotline</td><td>12301 / 0872-96927</td></tr>
+  </table>
+</div>
+
+<!-- ==================== EVENING GUIDE ==================== -->
+<div class="section">
+  <h2 class="lang-zh">🌙 每晚 · 古城+篝火</h2>
+  <h2 class="lang-en">🌙 Evenings · Old Town + Bonfire</h2>
+  <p class="lang-zh">住苍洱大道，步行到古城几分钟。任何一天晚上都能去。</p>
+  <p class="lang-en">Cang'er Avenue → Old Town is a few minutes' walk. Any evening works.</p>
+  <br>
+  <p class="lang-zh"><strong>篝火晚会怎么找：</strong></p>
+  <ul style="padding-left:20px;color:var(--muted);">
+    <li class="lang-zh">入住后问酒店前台——最靠谱</li>
+    <li class="lang-zh">人民路一些酒吧/餐吧晚上会点篝火</li>
+    <li class="lang-zh">洱海门附近有时有自发篝火打跳</li>
+    <li class="lang-zh">小红书搜"大理 篝火晚会 2026年7月"</li>
+  </ul>
+  <p class="lang-en"><strong>Finding bonfire events:</strong></p>
+  <ul style="padding-left:20px;color:var(--muted);">
+    <li class="lang-en">Ask hotel front desk — most reliable</li>
+    <li class="lang-en">Some bars on Renmin Road light bonfires at night</li>
+    <li class="lang-en">Erhai Gate area sometimes has spontaneous gatherings</li>
+    <li class="lang-en">Search RED (Xiaohongshu): "大理 篝火晚会 July 2026"</li>
+  </ul>
+</div>
+
+<!-- ==================== HALAL DINING MAP ==================== -->
+<div class="section">
+  <h2 class="lang-zh">🍽️ 清真饮食地图</h2>
+  <h2 class="lang-en">🍽️ Halal Dining Map</h2>
+  <table>
+    <tr><th class="lang-zh">区域</th><th class="lang-en">Area</th><th class="lang-zh">推荐</th><th class="lang-en">Recommendation</th></tr>
+    <tr><td class="lang-zh">古城南门</td><td class="lang-en">South Gate</td><td class="lang-zh">博爱路/一塔路清真一条街（日常主力）</td><td class="lang-en">Bo'ai Road Halal Street (daily go-to)</td></tr>
+    <tr><td class="lang-zh">巍山古城</td><td class="lang-en">Weishan</td><td class="lang-zh">回族聚居地，清真美食天堂（Day7）</td><td class="lang-en">Hui stronghold, halal food paradise (Day7)</td></tr>
+    <tr><td class="lang-zh">喜洲</td><td class="lang-en">Xizhou</td><td class="lang-zh">喜洲清真餐馆（Day4午餐）</td><td class="lang-en">Xizhou halal eateries (Day4 lunch)</td></tr>
+    <tr><td class="lang-zh">洱海边</td><td class="lang-en">Erhai lakeside</td><td class="lang-zh">提前查大众点评（Day3/6午餐）</td><td class="lang-en">Check Dianping ahead (Day3/6 lunch)</td></tr>
+  </table>
+</div>
+
+<!-- ==================== INTENSITY OVERVIEW ==================== -->
+<div class="section">
+  <h2 class="lang-zh">📊 每日强度一览</h2>
+  <h2 class="lang-en">📊 Daily Intensity</h2>
+  <table>
+    <tr><th class="lang-zh">日期</th><th class="lang-en">Date</th><th class="lang-zh">活动</th><th class="lang-en">Activity</th><th class="lang-zh">强度</th><th class="lang-en">Level</th></tr>
+    <tr><td>7/4</td><td class="lang-zh">抵达+聚餐</td><td class="lang-en">Arrival+Dinner</td><td>⭐</td></tr>
+    <tr><td>7/5</td><td class="lang-zh">苍山缆车</td><td class="lang-en">Cable Car</td><td>⭐⭐</td></tr>
+    <tr><td>7/6</td><td class="lang-zh">骑马+花海</td><td class="lang-en">Horse+Flowers</td><td>⭐⭐½</td></tr>
+    <tr><td>7/7</td><td class="lang-zh">采蘑菇+喜洲扎染</td><td class="lang-en">Mushrooms+Tie-Dye</td><td>⭐⭐½</td></tr>
+    <tr><td>7/8</td><td class="lang-zh">莫催茶室</td><td class="lang-en">Tea House</td><td>⭐</td></tr>
+    <tr><td>7/9</td><td class="lang-zh">洱海骑行</td><td class="lang-en">Cycling</td><td>⭐⭐</td></tr>
+    <tr><td>7/10</td><td class="lang-zh">巍山古城</td><td class="lang-en">Weishan</td><td>⭐⭐</td></tr>
+    <tr><td>7/11</td><td class="lang-zh">返程</td><td class="lang-en">Depart</td><td>⭐</td></tr>
+  </table>
+</div>
+
+<!-- ==================== COMMENTS ==================== -->
+<div class="section" id="comments">
+  <h2 class="lang-zh">💬 每日 Review 意见</h2>
+  <h2 class="lang-en">💬 Daily Reviews & Feedback</h2>
+  <p class="lang-zh" style="color:var(--muted);margin-bottom:16px">
+    点击每天标题展开行程，在下方评论区对任意一天提出修改建议。<br>
+    中国🇨🇳 和 比利时🇧🇪 都可以访问这个页面。
+  </p>
+  <p class="lang-en" style="color:var(--muted);margin-bottom:16px">
+    Click each day to expand the plan. Leave feedback for any day in the comments below.<br>
+    Accessible from both China 🇨🇳 and Belgium 🇧🇪.
+  </p>
+  <div class="giscus"></div>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>🌿 大理 · 2026年7月 · 三代同堂亲子游</p>
+  <p style="margin-top:6px;font-size:0.8em;">苍山不墨千秋画，洱海无弦万古琴</p>
+</div>
+
+<!-- Giscus comments -->
+<script src="https://giscus.app/client.js"
+  data-repo="YOUR_GITHUB_USERNAME/dali-trip-comments"
+  data-repo-id="YOUR_REPO_ID"
+  data-category="General"
+  data-category-id="YOUR_CATEGORY_ID"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="light"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+
+<script>
+// Toggle day cards
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// Expand all on load
+document.querySelectorAll('.day').forEach(d => d.classList.add('open'));
+
+// Language toggle
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  // Update giscus language
+  const giscusScript = document.querySelector('script[src*="giscus.app"]');
+  if (giscusScript) giscusScript.setAttribute('data-lang', lang === 'en' ? 'en' : 'zh-CN');
+  // Reload giscus
+  const giscusFrame = document.querySelector('iframe[src*="giscus"]');
+  if (giscusFrame) {
+    giscusFrame.src = giscusFrame.src;
+  }
+  localStorage.setItem('dali-trip-lang', lang);
+}
+
+// Restore language preference
+const savedLang = localStorage.getItem('dali-trip-lang');
+if (savedLang) setLang(savedLang);
+</script>
+
+</body>
+</html>
