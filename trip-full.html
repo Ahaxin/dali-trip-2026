@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏艳 · 西南旅行计划 2026.6.10—7.15</title>
+<style>
+:root{--bg:#faf8f5;--card:#fff;--text:#2c2416;--muted:#6b5e4a;--accent:#c17f3e;--accent2:#5a7a6f;--border:#e8dfd3;--tag-bg:#f0e8da;--today-bg:#fff8e7;--dali-accent:#3a5a40}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+.hero{background:linear-gradient(135deg,#3a5a40 0%,#588157 40%,#a3b18a 100%);color:#fff;padding:50px 20px 36px;text-align:center}
+.hero h1{font-size:1.8em;letter-spacing:1px;margin-bottom:6px}
+.hero .dates{font-size:1.25em;font-weight:300}
+.hero .sub{font-size:0.95em;opacity:.85;margin-top:4px}
+.container{max-width:860px;margin:0 auto;padding:12px 16px 40px}
+
+/* Info bar */
+.info-bar{display:flex;flex-wrap:wrap;gap:10px;background:var(--card);border-radius:10px;padding:16px 18px;margin:-24px 8px 20px;box-shadow:0 1px 8px rgba(0,0,0,.05);justify-content:center;font-size:.9em;color:var(--muted)}
+.info-bar strong{color:var(--text)}
+
+/* Phase header */
+.phase{margin:28px 0 12px;padding:10px 14px;border-left:4px solid var(--accent2);font-size:1.15em;font-weight:700;color:var(--accent2)}
+.phase.dali{border-left-color:var(--dali-accent);color:var(--dali-accent);background:#eef5ef;border-radius:0 8px 8px 0;padding:14px 18px}
+
+/* Day card */
+.day{background:var(--card);border-radius:10px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);border:1px solid var(--border)}
+.day.today{border-color:var(--accent);box-shadow:0 0 0 3px rgba(193,127,62,.15)}
+.day.today .day-header{background:var(--today-bg)}
+.day-header{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;min-height:48px}
+.day-header:hover{background:#fdfaf5}
+.day-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1em;font-weight:700;color:#fff;flex-shrink:0}
+.day-header h2{font-size:1em;flex:1;line-height:1.3}
+.day-header .date-range{font-size:.82em;color:var(--muted);white-space:nowrap}
+.day-body{display:none;padding:12px 16px 16px;border-top:1px solid var(--border)}
+.day.open .day-body{display:block}
+.day.open .day-header{border-bottom:none}
+
+.timeline{list-style:none}
+.timeline li{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);font-size:.9em;align-items:flex-start}
+.timeline li:last-child{border-bottom:none}
+.timeline .icon{width:20px;flex-shrink:0;text-align:center;font-size:.95em}
+.timeline .desc{flex:1}
+.timeline .note{font-size:.82em;color:var(--muted);margin-top:2px}
+.timeline .price{color:var(--accent);font-weight:600;font-size:.85em;white-space:nowrap}
+
+.tag{display:inline-block;background:var(--tag-bg);color:var(--muted);padding:2px 10px;border-radius:12px;font-size:.78em;margin:2px}
+.tag.important{background:#ffe8d6;color:#a0522d}
+.tag.booked{background:#d4edda;color:#2d6a4f}
+
+/* Highlight card */
+.highlight{background:#fff8e7;border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88em}
+
+/* Contacts section */
+.contacts{background:var(--card);border-radius:10px;padding:18px;margin:20px 0;border:1px solid var(--border)}
+.contacts h3{color:var(--accent2);margin-bottom:10px}
+.contacts table{width:100%;border-collapse:collapse;font-size:.88em}
+.contacts td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.contacts td:first-child{font-weight:600;color:var(--muted);white-space:nowrap;width:30%}
+
+/* Dali section */
+.dali-box{background:linear-gradient(135deg,#eef5ef,#e8f0e8);border:2px solid var(--dali-accent);border-radius:12px;padding:20px;margin:16px 0}
+.dali-box h3{color:var(--dali-accent);margin-bottom:8px}
+.dali-box .people{font-size:.92em;color:var(--muted)}
+
+/* Legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.82em;color:var(--muted);margin-bottom:16px}
+.legend span{display:flex;align-items:center;gap:4px}
+.legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* Footer */
+.footer{text-align:center;padding:30px 16px;color:var(--muted);font-size:.84em}
+
+/* TOC */
+.toc{background:var(--card);border-radius:10px;padding:16px;margin-bottom:20px;border:1px solid var(--border)}
+.toc summary{font-weight:700;cursor:pointer;margin-bottom:8px;color:var(--accent2)}
+.toc a{color:var(--accent);text-decoration:none;font-size:.9em;display:inline-block;margin:2px 8px 2px 0}
+.toc a:hover{text-decoration:underline}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero{padding:36px 14px 24px}
+  .hero h1{font-size:1.4em}
+  .hero .dates{font-size:1.05em}
+  .container{padding:8px}
+  .day-header{padding:10px 12px;gap:8px}
+  .day-num{width:32px;height:32px;font-size:.85em}
+  .day-header h2{font-size:.92em}
+  .day-header .date-range{font-size:.76em}
+  .day-body{padding:10px 12px}
+  .timeline li{flex-direction:column;gap:2px}
+  .timeline .price{margin-top:2px}
+  .phase{margin:20px 0 8px;font-size:1em}
+  .info-bar{margin:-20px 4px 16px;padding:12px;font-size:.82em;gap:6px}
+  .contacts table,.contacts td{display:block;width:100%}
+  .contacts td:first-child{margin-top:8px}
+}
+
+@media(max-width:400px){
+  .hero h1{font-size:1.2em}
+  .day-header h2{font-size:.85em}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>🚂 宏艳 · 西南旅行计划</h1>
+<div class="dates">2026年6月10日 — 7月15日</div>
+<div class="sub">大庆 → 北京 → 三峡 → 重庆 → 茅台 → 宜宾 → 成都 → 大理 → 昆明 → 北京 → 大庆</div>
+</div>
+
+<div class="container">
+
+<div class="info-bar">
+<span>👫 <strong>宏·艳</strong> 二人行</span>
+<span>🍽️ <strong>清真</strong>饮食</span>
+<span>🏠 7/4-7/11 <strong>大理全家团聚</strong></span>
+<span>📞 房东 <strong>19387213253</strong></span>
+</div>
+
+<div class="toc">
+<details><summary>📑 快速导航</summary>
+<a href="#p1">第1段 大庆→北京</a>
+<a href="#p2">第2段 北京</a>
+<a href="#p3">第3段 北京→宜昌</a>
+<a href="#p4">第4段 宜昌三峡</a>
+<a href="#p5">第5段 世纪游轮→奉节</a>
+<a href="#p6">第6段 奉节→重庆</a>
+<a href="#p7">第7段 重庆→茅台</a>
+<a href="#p8">第8段 宜宾</a>
+<a href="#p9">第9段 宜宾→成都</a>
+<a href="#p10">★ 大理全家团聚</a>
+<a href="#p11">第11段 大理→昆明</a>
+<a href="#p12">第12段 返程</a>
+</details>
+</div>
+
+<div class="legend">
+<span><span class="dot" style="background:#c17f3e"></span> 交通</span>
+<span><span class="dot" style="background:#5a7a6f"></span> 住宿</span>
+<span><span class="dot" style="background:#8b5a4a"></span> 游玩</span>
+<span><span class="dot" style="background:#b8860b"></span> 美食</span>
+<span><span class="dot" style="background:#9b6b9e"></span> 购物</span>
+<span>🔖 已预订</span>
+<span>⭐ 重要</span>
+</div>
+
+<!-- ===== PHASE 1: DAQING → BEIJING ===== -->
+<div class="phase" id="p1">🚂 第1段 · 大庆 → 齐齐哈尔 → 北京</div>
+
+<div class="day" data-date="2026-06-10">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">10</div>
+<h2>大庆 → 齐齐哈尔 → 北京</h2>
+<span class="date-range">6/10 周三</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">白鹭郡12:00 → 大庆东站（网约）</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>D6923</strong> 大庆东12:52 → 齐齐哈尔13:41<span class="tag booked">已订票</span><br><span class="note">二等座7车01F/D · 12306积分兑换</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">齐齐哈尔站 → 齐涵杨佳清真烧烤（鑫海店）</span></li>
+<li><span class="icon">🍽️</span><span class="desc">齐涵杨佳清真烧烤（鑫海店）</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>Z18</strong> 齐齐哈尔18:12 → 北京07:53（次日）<span class="tag booked">已订票</span><br><span class="note">硬卧14车01/02号下铺 · ¥331.50×2=663.00</span></span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 2: BEIJING ===== -->
+<div class="phase" id="p2">🏛️ 第2段 · 北京（6/11—6/13）</div>
+
+<div class="day" data-date="2026-06-11">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">11</div>
+<h2>北京 · 国家博物馆</h2>
+<span class="date-range">6/11 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">北京站 → 99优选酒店（大观园广安门中医店）</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>99优选酒店</strong> 大床房 · ¥165×2夜=330<span class="tag booked">已订</span><br><span class="note">6/11-6/13 · 携程5/30预订</span></span></li>
+<li><span class="icon">🍽️</span><span class="desc">南来顺饭庄 早餐小吃</span></li>
+<li><span class="icon">🚕</span><span class="desc">南来顺 → 国家博物馆（北门绿色通道）<br><span class="note">正义路北口停车，导航正义路与东长安街交叉口南侧</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>国家博物馆</strong> 11:00 · 宏艳预约免费<span class="tag booked">已预约</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">国博 → 酒店（正义路北口上车）</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-12">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">12</div>
+<h2>北京 · 中国美术馆 + 拍卖会 + 购物</h2>
+<span class="date-range">6/12 周五</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🍽️</span><span class="desc">南来顺饭庄 早餐</span></li>
+<li><span class="icon">🚕</span><span class="desc">南来顺 → 中国美术馆（9点开放）</span></li>
+<li><span class="icon">🎨</span><span class="desc"><strong>中国美术馆</strong> 《致敬巨匠：从达·芬奇到卡拉瓦乔——意大利文艺复兴名作》<br><span class="note">半价优惠票（60岁以上）¥59.94×2=119.88</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>北京懋隆春拍</strong> 懋隆艺术大厦<br><span class="note">预展6.12-6.13 · 近现代书画/明清官窑/宫廷玉器</span></span></li>
+<li><span class="icon">🛍️</span><span class="desc"><strong>EP雅莹北京华贸旗舰店</strong> / 北京SKP<br><span class="note">买裙子 · 玛丝菲尔/朗姿 · 三醋酸70%以上</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">商场 → 酒店</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-13">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">13</div>
+<h2>北京 · 牛街 → 北京西 → 宜昌</h2>
+<span class="date-range">6/13 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🍽️</span><span class="desc">早餐自理 或 南来顺/牛街</span></li>
+<li><span class="icon">🚕</span><span class="desc">南来顺 → 牛街（步行33分钟/出租¥10）</span></li>
+<li><span class="icon">🍽️</span><span class="desc"><strong>牛街午餐及购物</strong>（含火车食品+宜昌食品）</span></li>
+<li><span class="icon">🚕</span><span class="desc">牛街 → 北京西站南进站口 ¥15</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>T49</strong> 北京西14:59 → 宜昌东 次日09:00<span class="tag booked">已订票</span><br><span class="note">硬卧15车01/02号下铺 · ¥317.50×2=635.00 · 宏中信支付</span></span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 3: YICHANG ===== -->
+<div class="phase" id="p3">🚢 第3段 · 宜昌三峡</div>
+
+<div class="day" data-date="2026-06-14">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">14</div>
+<h2>宜昌 · 三峡大坝</h2>
+<span class="date-range">6/14 周日</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">宜昌东站 → 运7酒店（万达三峡游客中心店）¥16一口价</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>运7酒店</strong> 丽致大床房 · ¥146×2夜=291.90<span class="tag booked">已订</span><br><span class="note">6/14-6/16 · 携程6/3预订</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>三峡大坝旅游区</strong> 半天 · 观光车¥35/人<span class="tag important">提前7天预约</span><br><span class="note">三峡大坝游客换乘中心上车 · 自备餐食</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">换乘中心 → 酒店</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-15">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">15</div>
+<h2>宜昌 · 博物馆（备选）</h2>
+<span class="date-range">6/15 周一</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🏛️</span><span class="desc">宜昌博物馆（国家一级）<br><span class="note">⚠️ 周一可能闭馆，需确认；备选：转其他项目</span></span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 4: CRUISE ===== -->
+<div class="phase" id="p4">🛳️ 第4段 · 世纪游轮 — 长江三峡</div>
+
+<div class="day" data-date="2026-06-16">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">16</div>
+<h2>宜昌 → 奉节 · 世纪江山如诗号</h2>
+<span class="date-range">6/16 周二</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚌</span><span class="desc">三峡游客中心7:15集合 → 7:30接驳车出发<br><span class="note">接驳¥50×2=100</span></span></li>
+<li><span class="icon">🛳️</span><span class="desc"><strong>世纪游轮·江山如诗号</strong> 宜昌秭归茅坪港8:15登船9:00开船<span class="tag booked">已订</span><br><span class="note">贵宾区揽江阁 ¥675×2=1350+保险100=1450 · 携程5/30预订</span></span></li>
+<li><span class="icon">🏞️</span><span class="desc"><strong>9:45 西陵峡</strong>（轻松看）<br><strong>14:30 巫峡</strong>（人等景）<br><strong>16:30-17:00 瞿塘峡/夔门</strong>（人等景）<span class="tag important">夔门在左侧！</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">奉节三马山码头 → 泊野·江畔酒店（夔门印象店）步行12分钟</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>泊野·江畔酒店</strong> 城景悦享双床房 · ¥183×2夜=365.90<span class="tag booked">已订</span><br><span class="note">6/16-6/18 · 携程6/4预订</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-17">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">17</div>
+<h2>奉节 · 三峡之巅</h2>
+<span class="date-range">6/17 周三</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">酒店7:00 → 石庙游客中心8:00<br><span class="note">出租车¥55/网约¥48 · 29km/52分钟</span></span></li>
+<li><span class="icon">🏔️</span><span class="desc"><strong>三峡之巅景区</strong> 索道往返 8:30检票<br><span class="note">标准¥130×2 · 艳60-64半价 · 宏65+免票（索道全价）· 现场买票</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc">夔州博物馆（可选）</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-18">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">18</div>
+<h2>奉节 → 重庆</h2>
+<span class="date-range">6/18 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">夔门印象 → 奉节高铁站 ¥30-50</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>G5787</strong> 奉节8:14 → 重庆北10:24<span class="tag booked">已订票</span><br><span class="note">二等座6车18F/D · ¥158×2=316 · 6/4订票</span></span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 5: CHONGQING ===== -->
+<div class="phase" id="p5">🌆 第5段 · 重庆（6/18—6/21）</div>
+
+<div class="day" data-date="2026-06-18">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">18</div>
+<h2>重庆 · 三峡博物馆</h2>
+<span class="date-range">6/18 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">重庆北站 → 希漫江景酒店（渝中区中兴路）¥23<span class="tag important">与穆斯林大厦同楼</span></span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>希漫江景酒店</strong><span class="tag booked">已订</span><br><span class="note">朋悦江景大床房 ¥230×1夜 · 6/18-19（端午）<br>内窗特惠 ¥173×2夜=345.89 · 6/19-21（父亲节）<br>3天合计 ¥576 · 携程6/3预订</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>重庆中国三峡博物馆</strong> 免预约/提前7天</span></li>
+<li><span class="icon">🍽️</span><span class="desc"><strong>清真美食</strong>：真伊顺重庆火锅（总店）/ 庆聚斋（重庆穆斯林大厦店）</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-19">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">19</div>
+<h2>重庆 · 两江游船</h2>
+<span class="date-range">6/19 周五（端午）</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">酒店 → 朝天门码头</span></li>
+<li><span class="icon">🛳️</span><span class="desc"><strong>两江臻品游</strong> 朝天门码头20:00<br><span class="note">¥168/50分钟 · 4层甲板右侧观景+¥80/人 · 提前1-7天预约"重庆交运两江游"公众号</span></span></li>
+<li><span class="icon">📸</span><span class="desc">洪崖洞 · 解放碑 · 李子坝轻轨站</span></li>
+<li><span class="icon">🚕</span><span class="desc">朝天门码头 → 酒店</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-20">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">20</div>
+<h2>重庆 · 四川美术学院</h2>
+<span class="date-range">6/20 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">酒店 → 川美虎溪校区 ¥55/70分钟</span></li>
+<li><span class="icon">🎨</span><span class="desc"><strong>四川美术学院美术馆（罗中立美术馆）</strong><span class="tag important">提前2天零点预约</span><br><span class="note">6/20周六川美有活动！</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">川美 → 酒店 ¥55/60分钟</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-21">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">21</div>
+<h2>重庆 → 遵义 → 茅台镇</h2>
+<span class="date-range">6/21 周日</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">5:30 酒店 → 重庆西站 ¥32/18km</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>D1793</strong> 重庆西7:06 → 遵义8:36<span class="tag booked">已订票</span><br><span class="note">二等座3车1A/1B · ¥88×2=176 · 6/7订票</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">遵义 → 茅台镇</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>恒源泉大酒店</strong>（茅台镇1915广场店）¥145.89/1夜<span class="tag booked">已订</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>中国酒文化城</strong>（携程预约 · 艳半票 · 宏免票）<br>杨柳湾古街 · 赤水河夜景</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-22">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">22</div>
+<h2>茅台镇 → 遵义</h2>
+<span class="date-range">6/22 周一</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">中午前离开茅台镇 → 遵义火车站附近</span></li>
+<li><span class="icon">🏨</span><span class="desc">住宿：遵义（待确认）</span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 6: YIBIN ===== -->
+<div class="phase" id="p6">🍶 第6段 · 宜宾（6/23—6/28）</div>
+
+<div class="day" data-date="2026-06-23">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">23</div>
+<h2>遵义 → 宜宾 · 五粮液</h2>
+<span class="date-range">6/23 周二</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚄</span><span class="desc"><strong>G8752</strong> 遵义10:45 → 宜宾14:13<span class="tag booked">已订票</span><br><span class="note">二等座2车6A/B · ¥178×2=356 · 6/9订票</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">宜宾站 → VALATOMS梵拉图酒店 ¥12/6km</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>VALATOMS梵拉图酒店</strong>（大观楼合江门店）<span class="tag booked">已订</span><br><span class="note">1.8米大床房 · ¥152×3夜=455.88 · 6/23-6/26 · 携程6/9预订</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>五粮液酒文化博物馆</strong>（五粮液生态园区）</span></li>
+<li><span class="icon">🍽️</span><span class="desc">姚记牛肉馆（学盛街店）</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-24">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">24</div>
+<h2>宜宾 · 翠屏山 + 三江汇流</h2>
+<span class="date-range">6/24 周三</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🏔️</span><span class="desc"><strong>翠屏山公园</strong> 海拔900m<br><span class="note">开放式双人吊椅缆车往返¥35/人 · 步行20分钟从酒店</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc">宜宾市博物院 · 合江门（三江交汇）· 清真寺 · 冠英古街 · 流杯池公园</span></li>
+<li><span class="icon">🍽️</span><span class="desc">姚记牛肉馆</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-25">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">25</div>
+<h2>宜宾 · 自由日</h2>
+<span class="date-range">6/25 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🏛️</span><span class="desc">继续探索宜宾：冠英古街 · 流杯池公园 · 市区漫步</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-26">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">26</div>
+<h2>宜宾 · 李庄古镇 + 蜀南竹海</h2>
+<span class="date-range">6/26 周五</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🛳️</span><span class="desc"><strong>三江游船</strong> 合江门码头10:00-11:00 → 李庄古镇中渡口码头<br><span class="note">¥58单程 · 看三江汇流 · ⚠️李庄无清真饭店，自带食品</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>李庄古镇</strong> 11:00-14:00<br><span class="note">万里长江第一古镇 · 梁思成林徽因故居 · 同济大学旧址 · 席子巷</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">李庄 → 蜀南竹海 40km ¥max150<span class="tag important">预约"一码游竹海"/携程</span></span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>竹之味客栈</strong>（海中海·景区内）¥176/夜<br><span class="note">⚠️ 无清真餐！需自带食品 · 免费班车</span></span></li>
+<li><span class="icon">🎋</span><span class="desc">翡翠长廊（步行3分钟）· 观光车¥55/人3天无限次</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-27">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">27</div>
+<h2>蜀南竹海 → 宜宾</h2>
+<span class="date-range">6/27 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚌</span><span class="desc">海中海 → 1号线观光车 → 西大门 → 直达大巴返回宜宾南岸客运站</span></li>
+<li><span class="icon">🏨</span><span class="desc"><strong>莱斯特酒店·甄选（华荣店）</strong> ¥116<br><span class="note">6/27-6/28 · 南岸客运站附近</span></span></li>
+<li><span class="icon">🍽️</span><span class="desc"><strong>清真家荣饭店（俊虹园店）</strong> 步行20分钟<br>附近10分钟：清真牛肉面 · 盖浇饭</span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 7: CHENGDU ===== -->
+<div class="phase" id="p7">🐼 第7段 · 成都（6/28—7/2）</div>
+
+<div class="day" data-date="2026-06-28">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">28</div>
+<h2>宜宾 → 成都 · 三星堆</h2>
+<span class="date-range">6/28 周日</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">酒店 → 宜宾火车站 ¥15</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>D2238</strong> 宜宾7:23 → 成都东9:03<span class="tag">待订票</span><br><span class="note">¥85/100分钟 · 6/14订票</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">成都东站 → 酒店 ¥35/5km</span></li>
+<li><span class="icon">🏨</span><span class="desc">如家酒店（春熙路地铁站店）¥132<br>后期：威登酒店 ¥117 或 成都民鸣酒店 ¥151</span></li>
+<li><span class="icon">🏛️</span><span class="desc"><strong>三星堆博物馆</strong><br><span class="note">7:00春熙路IFS熊猫屁股"成都公交集团"大巴1号线¥25/70分钟 · 60+老人免票直入</span></span></li>
+<li><span class="icon">🏛️</span><span class="desc">四川博物院 · 金沙遗址 · 四川美术馆 · 成都博物馆</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-29">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">29</div>
+<h2>成都 · 青城山前山</h2>
+<span class="date-range">6/29 周一</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">网约车 成都 → 青城山前山 ¥150-200/1小时</span></li>
+<li><span class="icon">🏔️</span><span class="desc"><strong>青城山前山</strong><span class="tag important">老人全程代步</span><br><span class="note">门票：60-64岁¥40 · 65+免票 · "青城山都江堰"公众号<br>观光车¥10 → 月城湖船¥5 → 索道往返¥60 → 上清宫 → 原路返回</span></span></li>
+<li><span class="icon">🚕</span><span class="desc">返回成都酒店 ¥150-200</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-06-30">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#b8860b">30</div>
+<h2>成都 · 清真美食 + 宽窄巷子</h2>
+<span class="date-range">6/30 周二</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">春熙路 → 宽窄巷子 ¥15/4km</span></li>
+<li><span class="icon">🍽️</span><span class="desc"><strong>成都清真美食天堂：</strong><br>马叶洋的川院里 · 清真牛肉回锅肉<br>皇城坝川派清真牛肉火锅（领地中心东塔店）<br>川院里清真川小馆<br>笨犇牛鲜切牛肉火锅 · 牛比得地道川菜<br>皇城坝百年清真牛肉火锅（天府广场店）<br>酥小蒙清真牛肉饼（天府广场店）<br>鹅市巷成都回民菜</span></li>
+<li><span class="icon">🏛️</span><span class="desc">成都八益2026春季艺术品拍卖会</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-02">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">2</div>
+<h2>成都 → 广通北 → 大理</h2>
+<span class="date-range">7/2 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">酒店 → 成都站</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>成都 → 广通北</strong><span class="tag">待订票</span><br><span class="note">D251/成都南7:05-广通北14:14 ¥229 · 6小时 · 6/18订票</span></span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>广通北 → 大理</strong><span class="tag">待订票</span><br><span class="note">D8759/广通北15:23-大理16:38 ¥88 · 多班 · 6/18订票（到站2小时后）</span></span></li>
+<li><span class="icon">🏨</span><span class="desc">大理住宿 火车站附近 ¥100-250</span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 8: DALI FAMILY REUNION ===== -->
+<div class="phase dali" id="p8">🌟 第8段 · 大理全家团聚（7/4—7/11）⭐⭐⭐</div>
+
+<div class="dali-box">
+<h3>🏠 菲宿 · 文献路298号</h3>
+<p class="people">
+👨‍👩‍👧‍👧 <strong>常昕一家6人</strong>（常昕+太太+2女儿7/8岁+父母宏艳）<br>
+👨‍👩‍👧‍👧 <strong>友家4人</strong>（两大两小）<br>
+📞 房东 <strong>19387213253</strong>（电话/微信同号）<br>
+🚶 步行到古城南门5分钟 · 各带独立卫生间 · 可做饭 · 二楼整层<br>
+🍽️ 全程清真 · 南门博爱路清真一条街步行可达<br>
+🔗 详细行程：<a href="https://ahaxin.github.io/dali-trip-2026/" target="_blank" style="color:var(--accent)">ahaxin.github.io/dali-trip-2026/</a>
+</p>
+</div>
+
+<div class="day" data-date="2026-07-04">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">4</div>
+<h2>大理 · 抵达 + 两家高档清真聚餐</h2>
+<span class="date-range">7/4 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚄</span><span class="desc">宏艳：保山 → 大理（与常昕汇合）</span></li>
+<li><span class="icon">✈️</span><span class="desc">常昕：6/30比利时→7/1成都→7/1西双版纳→7/4大理</span></li>
+<li><span class="icon">🏨</span><span class="desc">入住文献路298号菲宿 · 7晚<span class="tag booked">常昕已定</span></span></li>
+<li><span class="icon">🍽️</span><span class="desc"><strong>19:00 两家10人大聚餐</strong><span class="tag important">高档清真</span><br><span class="note">推荐：古城花园清真餐厅/伊香园/洱海边酒店定制清真宴</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-05">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">5</div>
+<h2>苍山缆车 · 感通索道</h2>
+<span class="date-range">7/5 周日</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚡</span><span class="desc"><strong>感通索道</strong> 2600m · 玉带路平缓栈道<br><span class="note">导航"感通索道" · 0872-2682853 · 老人友好</span></span></li>
+<li><span class="icon">🌙</span><span class="desc">晚上：古城南门溜达</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-06">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">6</div>
+<h2>骑马 + 花海</h2>
+<span class="date-range">7/6 周一</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🐴</span><span class="desc"><strong>苍山茶马古道骑马</strong><br><span class="note">感通寺附近 · 导航"苍山茶马古道骑马" · ¥80-150/人</span></span></li>
+<li><span class="icon">🌸</span><span class="desc"><strong>洱海边花海</strong><br><span class="note">导航"花伴一生玫瑰庄园"/"大理花海" · ¥30-60 · 薰衣草/向日葵/格桑花</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-07">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#4a7c59">7</div>
+<h2>🍄 采蘑菇 + 喜洲扎染</h2>
+<span class="date-range">7/7 周二</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🍄</span><span class="desc"><strong>采蘑菇</strong> 苍山脚下 7:30-10:00<br><span class="note">小红书/美团预约向导 · ¥150-300/组 · 7月菌子季！</span></span></li>
+<li><span class="icon">🏘️</span><span class="desc"><strong>喜洲古镇</strong> + <strong>周城扎染</strong><br><span class="note">导航"周城扎染博物馆"/"璞真扎染" · ¥50-100/人</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-08">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#6b8c5c">8</div>
+<h2>莫催茶室 · 溪水日</h2>
+<span class="date-range">7/8 周三</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🍵</span><span class="desc"><strong>莫催茶室</strong> 喜洲苍山脚下 10:00-16:00<br><span class="note">导航"莫催茶室" · 大人喝茶 · 孩子溪边玩水 · 自带清真午餐</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-09">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5b8fa8">9</div>
+<h2>洱海骑行日</h2>
+<span class="date-range">7/9 周四</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚲</span><span class="desc"><strong>洱海生态廊道骑行</strong><br><span class="note">导航"才村码头" · 电瓶车¥40-60/天 · 自行车¥20-30/天 · 无机动车安全</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-10">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">10</div>
+<h2>巍山古城 · 清真美食天堂</h2>
+<span class="date-range">7/10 周五</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🏛️</span><span class="desc"><strong>巍山古城</strong> 距大理60km/1小时<br><span class="note">导航"巍山古城" · 回族聚居地 · 扒肉饵丝/一根面/蜜饯</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-11">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#9b9b9b">11</div>
+<h2>大理 · 告别 → 昆明</h2>
+<span class="date-range">7/11 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚄</span><span class="desc">大理 → 昆明 高铁¥145-155/3小时<span class="tag">待订票</span><br><span class="note">根据常昕离开时间选择 · 6/27订票</span></span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 9: KUNMING ===== -->
+<div class="phase" id="p9">🌸 第9段 · 昆明（7/11—7/13）</div>
+
+<div class="day" data-date="2026-07-11">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#5a7a6f">11</div>
+<h2>抵达昆明</h2>
+<span class="date-range">7/11 周六</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🏨</span><span class="desc">昆明住宿 2夜 · 昆明站附近</span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-12">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#8b5a4a">12</div>
+<h2>昆明 · 石博会 + 老街</h2>
+<span class="date-range">7/12 周日</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">💎</span><span class="desc"><strong>昆明石博会</strong></span></li>
+<li><span class="icon">🏛️</span><span class="desc">聂耳故居 · 昆明老街 · 云南博物馆 · 斗南花市</span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== PHASE 10: RETURN ===== -->
+<div class="phase" id="p10">🏠 第10段 · 返程（7/13—7/15）</div>
+
+<div class="day" data-date="2026-07-13">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">13</div>
+<h2>昆明 → 北京（火车）</h2>
+<span class="date-range">7/13 周一</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚄</span><span class="desc"><strong>优选 Z162</strong> 昆明20:00 → 北京西 次日6:57 ¥575<span class="tag">待订票</span><br><span class="note">备选 Z54 昆明7:00-北京西17:17 · 6/29订票</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-14">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#c17f3e">14</div>
+<h2>北京 → 大庆（火车）</h2>
+<span class="date-range">7/14 周二</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">北京西站 → 北京站</span></li>
+<li><span class="icon">🚄</span><span class="desc"><strong>优选 T47</strong> 北京18:40 → 大庆西 次日8:29 ¥317.50<span class="tag">待订票</span><br><span class="note">备选 Z17 21:26-9:34 ¥371.50 · 6/30后订票</span></span></li>
+</ul>
+</div>
+</div>
+
+<div class="day" data-date="2026-07-15">
+<div class="day-header" onclick="toggleDay(this)">
+<div class="day-num" style="background:#9b9b9b">15</div>
+<h2>回到大庆 🏠</h2>
+<span class="date-range">7/15 周三</span>
+</div>
+<div class="day-body">
+<ul class="timeline">
+<li><span class="icon">🚕</span><span class="desc">大庆西站 → 白鹭郡 · 到家！</span></li>
+</ul>
+</div>
+</div>
+
+<!-- ===== KEY CONTACTS ===== -->
+<div class="contacts">
+<h3>📞 重要联系方式</h3>
+<table>
+<tr><td>大理房东</td><td>19387213253（电话/微信同号）</td></tr>
+<tr><td>大理住宿</td><td>大理州大理市大理镇文献路298号 · 菲宿</td></tr>
+<tr><td>苍山感通索道</td><td>0872-2682853</td></tr>
+<tr><td>大理市人民医院</td><td>0872-2127066</td></tr>
+<tr><td>景区救援</td><td>0872-2670004</td></tr>
+<tr><td>旅游投诉</td><td>12301 / 0872-96927</td></tr>
+<tr><td>大理详细行程</td><td><a href="https://ahaxin.github.io/dali-trip-2026/" target="_blank" style="color:var(--accent)">ahaxin.github.io/dali-trip-2026/</a></td></tr>
+</table>
+</div>
+
+<div class="contacts">
+<h3>📝 待办提醒</h3>
+<table>
+<tr><td>6/18前</td><td>订成都→广通北→大理火车票</td></tr>
+<tr><td>6/27前</td><td>订大理→昆明火车票</td></tr>
+<tr><td>6/29前</td><td>订昆明→北京火车票</td></tr>
+<tr><td>6/30前</td><td>订北京→大庆火车票</td></tr>
+<tr><td>7/4前</td><td>预约Day1高档清真聚餐 · 预约采蘑菇向导 · 预约莫催茶室</td></tr>
+<tr><td>出发前</td><td>青城山"青城山都江堰"公众号预约 · 三峡大坝提前7天预约 · 川美提前2天零点预约 · 两江游提前1-7天预约 · 三星堆预约</td></tr>
+</table>
+</div>
+
+<div class="footer">
+<p>🚂 宏艳 · 西南旅行 2026 · 大庆→北京→三峡→重庆→茅台→宜宾→成都→大理→昆明→大庆</p>
+<p style="margin-top:4px;font-size:.78em">全程清真饮食 · 二人同行 · 7/4-7/11大理全家团聚</p>
+</div>
+
+</div>
+
+<script>
+// Toggle day card
+function toggleDay(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// Auto-expand today's card + yesterday's (for multi-day)
+(function() {
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0,10);
+  
+  // Also check yesterday (for multi-day trips spanning midnight)
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().slice(0,10);
+  
+  let found = false;
+  
+  // Try today first
+  document.querySelectorAll('.day[data-date]').forEach(day => {
+    if (day.getAttribute('data-date') === todayStr) {
+      day.classList.add('open', 'today');
+      day.querySelector('.day-header').scrollIntoView({behavior:'smooth',block:'center'});
+      found = true;
+    }
+  });
+  
+  // If no match for today, try yesterday
+  if (!found) {
+    document.querySelectorAll('.day[data-date]').forEach(day => {
+      if (day.getAttribute('data-date') === yesterdayStr) {
+        day.classList.add('open', 'today');
+        day.querySelector('.day-header').scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    });
+  }
+  
+  // If still no match (trip hasn't started or has ended), show first day
+  if (!found && !document.querySelector('.day.today')) {
+    const firstDay = document.querySelector('.day[data-date]');
+    if (firstDay) {
+      // Check if trip is in the future
+      const tripStart = new Date('2026-06-10');
+      const tripEnd = new Date('2026-07-15');
+      if (now >= tripStart && now <= tripEnd) {
+        // Find the most recent day
+        let closestDay = null;
+        document.querySelectorAll('.day[data-date]').forEach(day => {
+          const d = new Date(day.getAttribute('data-date'));
+          if (d <= now) closestDay = day;
+        });
+        if (closestDay) {
+          closestDay.classList.add('open', 'today');
+          closestDay.querySelector('.day-header').scrollIntoView({behavior:'smooth',block:'center'});
+        }
+      }
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
